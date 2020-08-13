@@ -224,17 +224,6 @@ RUN if [ ${INSTALL_PCOV} = true ]; then \
 ;fi
 
 ###########################################################################
-# Phpdbg:
-###########################################################################
-
-ARG INSTALL_PHPDBG=false
-
-RUN if [ ${INSTALL_PHPDBG} = true ]; then \
-    # Load the xdebug extension only with phpunit commands
-    apt-get install -y --force-yes php${LARADOCK_PHP_VERSION}-phpdbg \
-;fi
-
-###########################################################################
 # Blackfire:
 ###########################################################################
 
@@ -945,7 +934,7 @@ ARG PGID=1000
 ENV PGID ${PGID}
 
 RUN groupmod -o -g ${PGID} www-data && \
-    usermod -o -u ${PUID} -g www-data www-data
+    usermod -o -u ${PUID} -g ${PGID} www-data
 
 # Adding the faketime library to the preload file needs to be done last
 # otherwise it will preload it for all commands that follow in this file
